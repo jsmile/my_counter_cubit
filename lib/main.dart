@@ -34,8 +34,9 @@ class MyHomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: BlocListener<CounterCubit, CounterState>(
+      body: BlocConsumer<CounterCubit, CounterState>(
         listener: (context, state) {
+          // only single time called 가능
           if (state.counter == 3) {
             showDialog(
               context: context,
@@ -55,16 +56,15 @@ class MyHomePage extends StatelessWidget {
             );
           }
         },
-        child: BlocBuilder<CounterCubit, CounterState>(
-          builder: (context, state) {
-            return Center(
-              child: Text(
-                '${state.counter}',
-                style: TextStyle(fontSize: 52.0),
-              ),
-            );
-          },
-        ),
+        builder: (context, state) {
+          // multiple times called 가능
+          return Center(
+            child: Text(
+              '${state.counter}',
+              style: TextStyle(fontSize: 52.0),
+            ),
+          );
+        },
       ),
       floatingActionButton: Row(
         mainAxisAlignment: MainAxisAlignment.end,
